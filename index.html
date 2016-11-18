@@ -1,18 +1,70 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Hello, World! - A-Frame</title>
-    <meta name="description" content="Hello, World! - A-Frame">
-    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>Web VR Tutorial</title>
+  <meta name="description" content="Web VR Tutorial">
+  <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <img id="texture" src="img/texture-leaf.png">
+      <a-asset-item id="snowy-obj" src="model/winter.obj"></a-asset-item>
+      <a-asset-item id="snowy-mtl" src="model/winter.mtl"></a-asset-item>
+      <!-- <a-asset-item id="snowy-dae" src="model/winter.mtl"></a-asset-item> -->
+      <img id="sky" src="img/snow_sky_2.jpg">
+    </a-assets>
+    <a-entity position="5 0 7">
+        <a-camera>
+          <a-entity position="0 0 0">
+            <a-cursor color="#2E3A87" fuse="true"></a-cursor>
+          </a-entity>
+        </a-camera>
+    </a-entity>
+    <!--<a-entity collada-model="#snowy-dae" scale="0.4 0.4 0.4"></a-entity>-->
+    <a-entity obj-model="obj:#snowy-obj; mtl:#snowy-mtl" scale="0.4 0.4 0.4"></a-entity>
+
+    <a-box id="myBox" color="#45BB79" width="3" height="3" depth="3" position="10 2 -5" rotation="0 0 45" scale="0.5 0.5 0.5" src="#texture">
+    <!-- Interactive object -->
+      <a-animation begin="click" end="mouseleave" fill="forwards" attribute="rotation" to="0 360 0" direction="alternate" repeat="indefinite" dur="3000"></a-animation>
+      <a-event name="mouseenter" scale="2.4 2.3 1.5"></a-event>
+      <a-event name="mouseleave" scale="0.7 0.7 0.7"></a-event>
+      <!-- Chaining 2 animations -->
+      <!-- <a-animation begin="backHome" attribute="rotation" to="0 0 45" direction="alternate" dur="3000"></a-animation> -->
+    </a-box>
+    
+    <!-- New lights. -->
+    <a-entity light="type: point; color: #FFF; intensity: 4.0" position="5.2 0 2.6"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 4.0" position="6.9 1.35 -5.4"></a-entity>
+    <!--<a-light type="point" color="#AAA" position="0 0 10"></a-light> -->
+    <!-- <a-light type="spot" color="#FFFFFF" position="0 20 -5" look-at="a-asset-item"></a-light> -->
+    <!-- <a-entity light="type: directional; color: #FFF; intensity: 5.0" position="10 10 1"></a-entity> -->
+    <a-sky src="#sky"></a-sky>
+  </a-scene>
+  <script type="text/javascript">
+    /*document.querySelector('#myBox').addEventListener('animationend', function() {
+      document.querySelector('#myBox').emit('backHome');
+    });/*
+
+    /*
+    AFRAME.registerComponent('scale-on-click', {
+      schema: {
+        to: {
+          default: '2 2 2'
+        }
+      },
+      init: function() {
+        var data = this.data;
+        this.el.addEventListener('click', function() {
+          this.setAttribute('scale', data.to);
+        });
+      }
+    });
+    */
+  </script>
+</body>
+
 </html>
